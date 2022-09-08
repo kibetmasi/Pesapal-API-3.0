@@ -8,9 +8,29 @@ body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
     height: 100%;
+    width: 100;
 }
 
 textarea#password,
 input#text {
     color: #000;
+}
+
+
+/* scrollbar */
+
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(0, 0, 0);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(0, 0, 0);
 }
