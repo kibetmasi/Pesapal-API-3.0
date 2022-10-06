@@ -9,8 +9,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IframePipe } from './iframe.pipe';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
