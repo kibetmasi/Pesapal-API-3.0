@@ -1,10 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Address, Callback, MoneyOptons, IForm } from './data';
 
-const demoUrl = 'https://cybqa.pesapal.com/pesapalv3'
-// const demoUrl = '	https://pay.pesapal.com/v3'
 
 interface IFormGroup extends FormGroup {
   value: IForm
@@ -19,49 +18,72 @@ interface IFormGroup extends FormGroup {
   selector: 'app-root',
   styleUrls: ['./app.component.scss'],
   template: `
-  <div class="text">
-  <a target="_blank" href="https://documenter.getpostman.com/view/6715320/UyxepTv1">API reference</a>
-  </div>
-    <div class="fullscreen-container"s>
-      <div class="login-container">
-        <h4>Payment page Integration</h4>
-          <form class="form" [formGroup]="form" (ngSubmit)="getToken()">
-            <div class="input-group">
-            <mat-form-field>
-              <mat-label>Currency</mat-label>
-              <mat-select [formControl]="form.controls.currency">
-                <mat-option *ngFor="let cash of options" value="{{cash.value}}">{{cash.name}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-              <input [formControl]="form.controls.amount" type="number" 
-              placeholder="Amount" id="text" name="text" class="input-username"> 
-            </div>        
-            <div class="input-group">
-              <textarea [formControl]="form.controls.description" 
-              placeholder="Description" id="password" name="password" class="input-password">
-              </textarea>
-            </div>      
-            <input type="submit" placeholder="Make payment" class="button" [disabled]="!form.valid || form.getRawValue().amount <= 0" > 
-            <h6 
-              [style.color]="'red'" 
-              *ngIf="form.getRawValue()?.amount <= 0 && form.get('amount')?.touched">
-              Amount should be greater than 0
-            </h6>   
-          </form>    
+    <div class="text">
+        <a target="_blank" href="https://documenter.getpostman.com/view/6715320/UyxepTv1">API reference</a>
     </div>
-  </div>
-    <iframe *ngIf="iframe" [src]="iframe | safeUrl"></iframe>
+    <div class="fullscreen-container">
+        <div class="login-container">
+            <h4 [style.font-weight]="'bold'">Pesapal API 3.0</h4>
+            <section class="example-section">
+                <label class="example-margin">Environment:</label>
+                <mat-radio-group>
+                    <mat-radio-button (change)="onEnvChanged($event)" 
+                    class="example-margin" [value]="'https://cybqa.pesapal.com/pesapalv3'">
+                        Sandbox
+                    </mat-radio-button>
+                    <mat-radio-button (change)="onEnvChanged($event)" 
+                    class="example-margin" [value]="'https://pay.pesapal.com/v3'">
+                        Live
+                    </mat-radio-button>
+                </mat-radio-group>
+                <h5 [style.color]="'red'" *ngIf="!demoUrl">
+                Select the environment before proceeding
+                </h5>
+            </section>
+            <div [ngStyle]="{'pointer-events' : !demoUrl ? 'none' : 'all'}">
+                <form class="form" [formGroup]="form" (ngSubmit)="getToken()">
+                    <div class="input-group">
+                        <mat-form-field>
+                            <mat-label>Currency</mat-label>
+                            <mat-select [formControl]="form.controls.currency">
+                                <mat-option *ngFor="let cash of options" value="{{cash.value}}">{{cash.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <input [formControl]="form.controls.amount" type="number" 
+                        placeholder="Amount" id="text" name="text" class="input-username">
+                    </div>
+                    <div class="input-group">
+                        <textarea [formControl]="form.controls.description" 
+                        placeholder="Description" id="password" name="password" class="input-password">
+                    </textarea>
+                    </div>
+                    <input type="submit" placeholder="Make payment" class="button" 
+                    [disabled]="!form.valid 
+                    || form.getRawValue().amount <= 0 
+                    || !demoUrl">
+                    <h6 [style.color]="'red'" 
+                    *ngIf="form.getRawValue()?.amount <= 0 && form.get('amount')?.touched">
+                        Amount should be greater than 0
+                    </h6>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="iframe_show">
+        <iframe *ngIf="iframe" [src]="iframe | safeUrl"></iframe>
+    </div>
 `
 })
 
 export class AppComponent implements OnInit {
+  demoUrl:any
   paymentData!: IForm
   form!:IFormGroup
   main_form!:IForm
   iframe:any;
-  demoKeys:any = {  //demo keys
-    "consumer_key": "vssEbl/R5gzC/Lqu29nKF+UEMa0ppDzz",
-    "consumer_secret": "fKbaakP8ZyRZUh+vbmvLlOxUHOs=" 
+  keys:any = {  //demo keys
+    "consumer_key": "",
+    "consumer_secret": "" 
   }
 
   regIpn:any = {
@@ -70,7 +92,7 @@ export class AppComponent implements OnInit {
   }
 
   options: MoneyOptons[] = [
-    { name:"Kenyan Shilling",  value:"KES" },
+    { name:"Kenyan Shilling", value:"KES" },
     { name:"US Dollar", value:"USD" },
     { name:"Euro", value:"EUR" },
     { name:"Great Britain Pound", value:"GBP" },
@@ -80,6 +102,7 @@ export class AppComponent implements OnInit {
   
   constructor(
     private http: HttpClient, 
+    private snack: MatSnackBar,
     private formBuilder: FormBuilder,
   ) {}
 
@@ -87,7 +110,7 @@ export class AppComponent implements OnInit {
     this['form'] = this.formBuilder.group({
       currency: ['', [Validators.required]],
       amount: ['', [Validators.required] ],
-      description: ['',[Validators.required, Validators.maxLength(256), Validators.minLength(10)] ]
+      description: ['',[ Validators.required, Validators.maxLength(256)] ]
     }) as IFormGroup
     this['form'].patchValue(this.paymentData)
   }
@@ -96,13 +119,18 @@ export class AppComponent implements OnInit {
     return control as FormControl;
   }
 
+  // get the environment endpoint
+  onEnvChanged(event:any){
+    this.demoUrl = event.value;
+  }
+
   getToken(){
-    this['http'].post(`${demoUrl}/api/Auth/RequestToken`, this.demoKeys) //generate access token
+    this['http']['post'](`${this['demoUrl']}/api/Auth/RequestToken`, this.keys) //generate access token
     .subscribe({
       next: (res:any) => {
         const headers = new HttpHeaders()
-        .set('Authorization', `Bearer ${res.token}`)
-        this['http'].post(`${demoUrl}/api/URLSetup/RegisterIPN`, this['regIpn'], {headers: headers}).subscribe({ //get IPN
+        .set('Authorization', `Bearer ${res['token']}`)
+        this['http']['post'](`${this['demoUrl']}/api/URLSetup/RegisterIPN`, this['regIpn'], {headers: headers}).subscribe({ //get IPN
           next: (res:any) => {
             const order:any = {
               "id": Date.now().toString(36) + Math.random().toString(36).substring(2),
@@ -125,7 +153,7 @@ export class AppComponent implements OnInit {
                   "postal_code": null,
                   "zip_code": null
             }}
-            this.http.post(`${demoUrl}/api/Transactions/SubmitOrderRequest`, order, {headers:headers}) //payment request
+            this['http']['post'](`${this['demoUrl']}/api/Transactions/SubmitOrderRequest`, order, {headers:headers}) //payment request
             .subscribe({
               next: (res:any) => {
                 this.iframe = res.redirect_url //load payment iframe
@@ -135,7 +163,15 @@ export class AppComponent implements OnInit {
           }, error: (err:any) => console.error(err)
         })
       },
-      error: (err) => console.error(err)
+      error: (err) => console.error(err),
+      complete: () => { 
+        this['snack']['open']("iframe loaded successfully",'x', {
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+          politeness: 'assertive',
+        }) 
+      }
     })
   }
 }
+

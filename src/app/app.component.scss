@@ -22,7 +22,7 @@ iframe {
 
 .login-container {
     padding: 70px 40px;
-    border-radius: 12.5px;
+    border-radius: 0px;
     background: #ffffff;
     box-shadow: 0px 0px 6px 0px #c7c2c294;
     width: 80%;
@@ -52,7 +52,7 @@ textarea {
     font-size: 1.1rem;
     padding: 8px;
     text-align: center;
-    background: hsl(264, 45%, 94%, 0.7);
+    background: rgba(216, 216, 216, 0.7);
     color: #D1C4E9;
     border: none;
     outline: none;
@@ -62,12 +62,11 @@ textarea {
 
 input::placeholder,
 textarea::placeholder {
-    color: #D1C4E9;
-    font-weight: bold;
+    color: #8b8b8b;
 }
 
 .input-group input:focus {
-    box-shadow: 0 0 0 2px #D1C4E9;
+    box-shadow: 0 0 0 2px #5d5d5d;
 }
 
 .button {
@@ -96,5 +95,9 @@ input:disabled {
 .text {
     text-align: center;
     font-size: larger;
-    padding-top: 50px !important;
+    /* padding-top: 50px !important; */
+}
+
+.example-margin {
+    margin: 0 4px;
 }
