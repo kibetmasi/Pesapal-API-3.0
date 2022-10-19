@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer} from '@angular/platform-browser';
 
-//sanitize Iframe URL
+//sanitize Pesapal Iframe URL
 @Pipe({
   name: 'safeUrl'
 })

@@ -1,36 +1,40 @@
-/* You can add global styles to this file, and also import other style files */
-
-html {
-    height: 100%;
-}
-
-body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
-    height: 100%;
-    width: 100;
-}
-
-textarea#password,
-input#text {
-    color: #000;
-}
-
-
-/* scrollbar */
-
-::-webkit-scrollbar {
-    width: 3px;
-}
-
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-    background: rgb(0, 0, 0);
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: rgb(0, 0, 0);
-}
+        /* You can add global styles to this file, and also import other style files */
+        
+        @import 'https://fonts.googleapis.com/css?family=Nunito';
+        iframe.ng-star-inserted {
+            width: 600px;
+            height: 600px;
+        }
+        
+        span.mat-radio-inner-circle {
+            background-color: #1e62a6 !important;
+        }
+        
+        path {
+            fill: #1e62a6 !important;
+        }
+        
+        .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+            border-color: #1e62a6 !important;
+        }
+        
+         ::-webkit-scrollbar {
+            width: 3px;
+        }
+        
+         ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+         ::-webkit-scrollbar-thumb {
+            background: rgb(0, 0, 0);
+        }
+        
+         ::-webkit-scrollbar-thumb:hover {
+            background: rgb(0, 0, 0);
+        }
+        
+        body,
+        html {
+            min-width: 970px;
+        }

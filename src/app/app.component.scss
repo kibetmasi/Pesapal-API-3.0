@@ -1,103 +1,177 @@
-iframe {
-    min-width: -webkit-fill-available;
-    min-height: 700px;
+.dd-select {
+    position: relative;
+    cursor: pointer;
 }
 
-* {
-    box-sizing: border-box;
+.dd-desc {
+    color: #aaa;
+    display: block;
+    overflow: hidden;
+    font-weight: normal;
+    line-height: 1.4em;
+}
+
+.dd-selected {
+    overflow: hidden;
+    display: block;
+    padding: 7px 5px;
+    font-weight: bold;
+}
+
+.dd-pointer {
+    width: 0;
+    height: 0;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    margin-top: -3px;
+}
+
+.dd-pointer-down {
+    border: solid 5px transparent;
+    border-top: solid 5px #000;
+}
+
+.dd-pointer-up {
+    border: solid 5px transparent !important;
+    border-bottom: solid 5px #000 !important;
+    margin-top: -8px;
+}
+
+.dd-options {
+    border: solid 1px #ccc;
+    border-top: none;
+    list-style: none;
+    box-shadow: 0px 1px 5px #ddd;
+    display: none;
+    position: absolute;
+    z-index: 2000;
     margin: 0;
     padding: 0;
-    font-family: Montserrat, sans-serif;
+    background: #fff;
+    overflow: auto;
 }
 
-.fullscreen-container {
-    padding-top: 30px;
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: fit-content;
-}
-
-.login-container {
-    padding: 70px 40px;
-    border-radius: 0px;
-    background: #ffffff;
-    box-shadow: 0px 0px 6px 0px #c7c2c294;
-    width: 80%;
-    max-width: 500px;
-}
-
-h1 {
-    text-align: center;
-    color: #504f53;
-}
-
-.form {
-    margin-top: 25px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.input-group {
-    display: flex;
-    flex-direction: column;
-    margin: 10px 0;
-}
-
-.input-group input,
-textarea {
-    font-size: 1.1rem;
-    padding: 8px;
-    text-align: center;
-    background: rgba(216, 216, 216, 0.7);
-    color: #D1C4E9;
-    border: none;
-    outline: none;
-    width: 80%;
-    margin: 0 auto;
-}
-
-input::placeholder,
-textarea::placeholder {
-    color: #8b8b8b;
-}
-
-.input-group input:focus {
-    box-shadow: 0 0 0 2px #5d5d5d;
-}
-
-.button {
+.dd-option {
+    padding: 7px 5px;
+    display: block;
+    border-bottom: solid 1px #ddd;
+    overflow: hidden;
+    text-decoration: none;
+    color: #333;
     cursor: pointer;
-    font-size: .9rem;
-    margin: 10px auto 0;
-    padding: 12px 5px;
-    width: 35%;
-    border: none;
-    outline: none;
-    color: white;
-    text-align: center;
-    background: #000;
+    -webkit-transition: all 0.25s ease-in-out;
+    -moz-transition: all 0.25s ease-in-out;
+    transition: all 0.25s ease-in-out;
+    -ms-transition: all 0.25s ease-in-out;
 }
 
-button:focus,
-button:hover {
-    box-shadow: 0 0 0 2px #D1C4E9;
+.dd-options>li:last-child>.dd-option {
+    border-bottom: none;
 }
 
-input:disabled {
-    background-color: #797979;
-    cursor: pointer;
+.dd-option:hover {
+    background: #f3f3f3;
+    color: #000;
 }
 
-.text {
-    text-align: center;
-    font-size: larger;
-    /* padding-top: 50px !important; */
+.dd-selected-description-truncated {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dd-option-selected {
+    background: #f6f6f6;
+}
+
+.dd-option-image,
+.dd-selected-image {
+    vertical-align: middle;
+    float: left;
+    margin-right: 5px;
+    max-width: 64px;
+}
+
+.dd-image-right {
+    float: right;
+    margin-right: 15px;
+    margin-left: 5px;
+}
+
+.dd-container {
+    position: relative;
+}
+
+​ .dd-selected-text {
+    font-weight: bold
+}
+
+.poweredby {
+    left: 0px !important;
+}
+
+body {
+    width: 100%
+}
+
+.jPanelMenu,
+body {
+    overflow-x: hidden
+}
+
+#jPanelMenu-menu {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: -1;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch
+}
+
+.jPanelMenu-panel {
+    position: static;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    width: 100%;
+    min-height: 100%;
+    background: rgb(255, 255, 255)
+}
+
+body {
+    width: 100%
+}
+
+.jPanelMenu,
+body {
+    overflow-x: hidden
+}
+
+#jPanelMenu-menu {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: -1;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch
+}
+
+.jPanelMenu-panel {
+    position: static;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    width: 100%;
+    min-height: 100%;
+    background: rgb(255, 255, 255)
 }
 
 .example-margin {
-    margin: 0 4px;
+    margin: 0 10px;
 }
