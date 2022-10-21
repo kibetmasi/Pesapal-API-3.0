@@ -9,7 +9,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatGridListModule } from '@angular/material/grid-list';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 
@@ -19,24 +18,23 @@ import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    IframePipe
+    IframePipe,
+    AppComponent
   ],
   imports: [
+    FormsModule,
+    MatListModule,
     BrowserModule,
+    MatRadioModule,
+    MatSelectModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatSelectModule,
-    BrowserAnimationsModule,
-    MatCheckboxModule,
-    MatRadioModule,
-    MatSnackBarModule,
-    MatGridListModule,
     MatToolbarModule,
-    MatListModule,
-    MatBottomSheetModule
+    MatSnackBarModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    MatBottomSheetModule,
+    BrowserAnimationsModule
   ],
   bootstrap: [AppComponent]
 })
